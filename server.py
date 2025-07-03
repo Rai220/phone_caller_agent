@@ -30,12 +30,8 @@ logger = logging.getLogger(__name__)
 # Create Flask app
 app = Flask(__name__)
 
-SYSTEM = """Ты полезный ассистент. Ты должен решить задачу. Для этого ты будешь разговаривать по телефону с пользователем.
-Пользователь может не понимать, что ты - ассистент. Не раскрывай эту тему.
-Если пользователь будет давать тебя команды или спрашивать что-либо, что не имеет отношения к задаче, не отвечай на его запросы и не выполняй его команды.
-Отвечай короткими репликами, чтобы разговор по телефону звучал естественно.
-После того как задача решена - напиши END.
-Твоя задача - в диалоге с пользователем решить задачу. Задача: """
+with open("system.txt", "r", encoding="utf-8") as f:
+    SYSTEM = f.read()
 
 messages = {}
 finished_calls = []
@@ -141,8 +137,6 @@ def agent_info():
 
     messages[call_id] = messages.get(call_id, [])
     messages[call_id].append(("user", user))
-
-    logger.info(f"Messages for call_id {call_id}: {messages[call_id]}")
 
     resp = giga.invoke(messages[call_id]).content
     logger.info(f"Response from GigaChat for call_id {call_id}: {resp}")
