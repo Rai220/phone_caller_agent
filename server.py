@@ -12,11 +12,10 @@ load_dotenv(find_dotenv())
 
 # LLM GigaChat
 giga = GigaChat(
-    model="GigaChat-2-Max",
     verify_ssl_certs=False,
     profanity_check=False,
     streaming=False,
-    max_tokens=1000,
+    max_tokens=500,
     temperature=1,
     top_p=0,
     timeout=600,
